@@ -11,6 +11,7 @@ WHITE = (255, 255, 255)
 FPS = 60
 PLAYER_IMG = 'link.png'
 ENEMY_IMG = 'octo.png'
+BULLET_IMG = 'link.png'
 BG_IMG = 'bg.gif'
 WIN_IMG = ''
 GAMEOVER_IMG = ''
@@ -51,13 +52,9 @@ class Player(GameSprite):
             self.rect.x += self.speed
         elif keys[K_a] and self.rect.x >= self.speed:
             self.rect.x -= self.speed
-        #elif keys[K_s] and self.rect.y <= ALTO - (self.rect.height + self.speed):
-            #self.rect.y += self.speed
-        #elif keys[K_w] and self.rect.y >= self.speed:
-            #self.rect.y -= self.speed
 
     def shoot(self):
-        bala = Bullet(ENEMY_IMG, self.rect.centerx - 5, self.rect.top, 10, 15, 5)
+        bala = Bullet(BULLET_IMG, self.rect.centerx - 5, self.rect.top, 10, 15, 5)
         balas.add(bala)
 
 class Bullet(GameSprite):
@@ -76,7 +73,6 @@ class Enemy(GameSprite):
             self.speed = randint(1, 6)
             fallos += 1
        
-
 
 # OBJETOS
 player = Player(PLAYER_IMG, (ANCHO - 60) // 2, ALTO - 100, 60, 80, 5)
@@ -118,14 +114,17 @@ while run:
         balas.draw(screen)
 
     # MECANICAS DE COLISION
-    #  **bala colinda con **enemigo
-    #  **enemigo colinda con **player
-        if sprite.spritecollide(player, mini_elvys, True):
-            vidas -= 1
-            print(vidas)
+    #  balas con enemigos
+        if sprite.groupcollide(balas, mini_elvys, True, True):
+            puntos += 1
             enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 60), -60, 60, 60, randint(1, 6))
             mini_elvys.add(enemy)
 
+    #  player con enemigos
+        if sprite.spritecollide(player, mini_elvys, True):
+            vidas -= 1
+            enemy = Enemy(ENEMY_IMG, randint(0, ANCHO - 60), -60, 60, 60, randint(1, 6))
+            mini_elvys.add(enemy)
 
 
     # CONDICION DE DERROTA
