@@ -1,0 +1,8 @@
+
+PENDIENTES: 
+
+1. Colisiones
+2. Condicion de Victoria
+3. Render Text
+4. Mecanicas
+5. EXTRAS 
