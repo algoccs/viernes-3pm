@@ -1,25 +1,16 @@
 from pygame import *
 from random import randint
+from config import *
 init()
-
-# CONSTANTES
-ANCHO, ALTO = 640, 480
-TITULO = 'Proyecto...'
-COLOR_FONDO = (220, 120, 30)
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-FPS = 60
-PLAYER_IMG = 'link.png'
-ENEMY_IMG = 'octo.png'
-BULLET_IMG = 'link.png'
-BG_IMG = 'bg.gif'
-WIN_IMG = ''
-GAMEOVER_IMG = ''
 
 # PARAMETROS INICIALES
 puntos = 0
 fallos = 0
 vidas = 3
+
+font.init()
+font_1 = font.Font(FONT_FILE, 24)
+
 
 # MAIN WINDOWN
 screen = display.set_mode((ANCHO, ALTO))
@@ -43,7 +34,6 @@ class GameSprite(sprite.Sprite):
 
     def reset(self):
         screen.blit(self.image, (self.rect.x, self.rect.y))
-
 
 class Player(GameSprite):
     def update(self):
@@ -112,6 +102,13 @@ while run:
         mini_elvys.draw(screen)
         balas.update()
         balas.draw(screen)
+        # renderizado de texto
+        puntos_txt = font_1.render(f'PUNTOS: {puntos}', 1, WHITE)
+        screen.blit(puntos_txt, (20, 20))
+        fallos_txt = font_1.render(f'FALLOS: {fallos}', 1, WHITE)
+        screen.blit(fallos_txt, (20, 60))
+        vidas_txt = font_1.render(f'VIDAS: {vidas}', 1, WHITE)
+        screen.blit(vidas_txt, (450, 20))
 
     # MECANICAS DE COLISION
     #  balas con enemigos
