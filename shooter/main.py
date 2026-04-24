@@ -6,11 +6,19 @@ init()
 # PARAMETROS INICIALES
 puntos = 0
 fallos = 0
-vidas = 3
+vidas = 5
 
+# TRABAJO CON TEXTO
 font.init()
 font_1 = font.Font(FONT_FILE, 24)
 
+# TRABAJO CON MUSICA
+mixer.init()
+# mixer.music.load(BGM)
+# mixer.music.play()
+
+# # efectos de sonido
+# gameover_sfx = mixer.Sound(SCREAM_SFX)
 
 # MAIN WINDOWN
 screen = display.set_mode((ANCHO, ALTO))
@@ -88,7 +96,9 @@ while run:
         if e.type == KEYDOWN:
             if e.key == K_r:
                 finish = False
-                # Procesamiento del evento de disparo
+                puntos = 0
+                fallos = 0
+                vidas = 5
             if e.key == K_SPACE:
                 player.shoot()
                 
@@ -128,7 +138,10 @@ while run:
         if fallos >= 20 or vidas <= 0:
             finish = True
             screen.fill(BLACK)
-            # RENDERIZAR LA PANTALLA GAME OVER
+            gameover = transform.scale(image.load(GAMEOVER_IMG), (ANCHO, ALTO))
+            screen.blit(gameover, (0,0))
+            # mixer.music.stop()
+            # gameover_sfx.play()
 
     # CONDICION VICTORIA
         if puntos == 67:
