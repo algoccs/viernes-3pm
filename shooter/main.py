@@ -13,12 +13,13 @@ font.init()
 font_1 = font.Font(FONT_FILE, 24)
 
 # TRABAJO CON MUSICA
+mixer.pre_init(44100, -16, 2, 512) 
 mixer.init()
-# mixer.music.load(BGM)
-# mixer.music.play()
+mixer.music.load(BGM)
+mixer.music.play()
 
 # # efectos de sonido
-# gameover_sfx = mixer.Sound(SCREAM_SFX)
+gameover_sfx = mixer.Sound(SCREAM_SFX)
 
 # MAIN WINDOWN
 screen = display.set_mode((ANCHO, ALTO))
@@ -99,6 +100,7 @@ while run:
                 puntos = 0
                 fallos = 0
                 vidas = 5
+                gameover_sfx.stop()
             if e.key == K_SPACE:
                 player.shoot()
                 
@@ -140,8 +142,8 @@ while run:
             screen.fill(BLACK)
             gameover = transform.scale(image.load(GAMEOVER_IMG), (ANCHO, ALTO))
             screen.blit(gameover, (0,0))
-            # mixer.music.stop()
-            # gameover_sfx.play()
+            mixer.music.stop()
+            gameover_sfx.play()
 
     # CONDICION VICTORIA
         if puntos == 67:
